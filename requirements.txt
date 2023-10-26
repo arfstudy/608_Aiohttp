@@ -1,0 +1,4 @@
+aiohttp
+asyncpg
+SQLAlchemy==1.4.47
+bcrypt
