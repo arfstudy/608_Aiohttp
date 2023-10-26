@@ -9,18 +9,6 @@ from models import Base, engine, Session, User
 app = web.Application
 
 
-# async def hello_world(request: web.Request):
-#     json_data = await request.json()
-#     headers = request.headers
-#     qs = request.query
-#
-#     print(f'{json_data=}')
-#     print(f'{headers=}')
-#     print(f'{qs=}')
-#
-#     return web.json_response({'hello': 'world'})
-
-
 def hash_password(password: str):
     password = password.encode()
     password = hashpw(password, gensalt())
@@ -62,7 +50,7 @@ class UserView(web.View):
     async def get(self):
         user = await get_user(self.user_id, self.session)
         return web.json_response({
-            'id': user.id,
+            'Получен id': user.id,
             'name': user.name,
             'creation_time': int(user.creation_time.timestamp())
         })
@@ -114,7 +102,7 @@ async def orm_context(app: web.Application):
 
 app.cleanup_ctx.append(orm_context)
 app.middlewares.append(session_middleware)
-# app.add_routes([web.post('/hello/world', hello_world)])
+
 app.add_routes([web.get('/users/{user_id:\d+}', UserView),
                 web.post('/users/', UserView),
                 web.patch('/users/{user_id:\d+}', UserView),
